@@ -50,8 +50,6 @@
 % The testflow support page is at:
 % http://www.michaelshell.org/tex/testflow/
 
-
-
 % Note that the a4paper option is mainly intended so that authors in
 % countries using A4 can easily print to A4 and see how their papers will
 % look in print - the typesetting of the document will not typically be
@@ -103,7 +101,7 @@
 
 % *** CITATION PACKAGES ***
 %
-%\usepackage{cite}
+\usepackage{cite}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of IEEE. Loading the cite package will
@@ -127,7 +125,7 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+   \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
@@ -137,7 +135,7 @@
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
   % driver is specified.
-  % \usepackage[dvips]{graphicx}
+   \usepackage[dvips]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../eps/}}
   % and their extensions so you won't have to specify these with
@@ -167,10 +165,10 @@
 
 
 
-
+\usepackage{hyperref}
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -252,7 +250,7 @@
 
 
 % *** SUBFIGURE PACKAGES ***
-%\usepackage[tight,footnotesize]{subfigure}
+\usepackage[tight,footnotesize]{subfigure}
 % subfigure.sty was written by Steven Douglas Cochran. This package makes it
 % easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
 % work, it is a good idea to load it with the tight package option to reduce
@@ -287,7 +285,7 @@
 
 % *** FLOAT PACKAGES ***
 %
-%\usepackage{fixltx2e}
+\usepackage{fixltx2e}
 % fixltx2e, the successor to the earlier fix2col.sty, was written by
 % Frank Mittelbach and David Carlisle. This package corrects a few problems
 % in the LaTeX2e kernel, the most notable of which is that in current
@@ -352,28 +350,21 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Bare Demo of IEEEtran.cls for Conferences}
+\title{Bandgap Reference Voltage Project}
 
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Michael Shell}
-\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
-Georgia Institute of Technology\\
-Atlanta, Georgia 30332--0250\\
-Email: http://www.michaelshell.org/contact.html}
+\author{\IEEEauthorblockN{Marc Christiansen}
+\IEEEauthorblockA{Email: mjch@pdx.edu}\\
 \and
-\IEEEauthorblockN{Homer Simpson}
-\IEEEauthorblockA{Twentieth Century Fox\\
-Springfield, USA\\
-Email: homer@thesimpsons.com}
+\IEEEauthorblockN{Jackson Pugh}
+\IEEEauthorblockA{%IEEE Student Member and Officer\\
+Email: japugh@pdx.edu}
 \and
-\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
-\IEEEauthorblockA{Starfleet Academy\\
-San Francisco, California 96678-2391\\
-Telephone: (800) 555--1212\\
-Fax: (888) 555--1212}}
+\IEEEauthorblockN{Krish Ramkumar}
+\IEEEauthorblockA{Email: krish13007@gmail.com}}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -397,22 +388,15 @@ Fax: (888) 555--1212}}
 %Telephone: (800) 555--1212, Fax: (888) 555--1212}
 %\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
 
-
-
-
 % use for special paper notices
 %\IEEEspecialpapernotice{(Invited Paper)}
-
-
-
 
 % make the title area
 \maketitle
 
-
 \begin{abstract}
 %\boldmath
-The abstract goes here.
+Write this after the paper has been finished.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -422,9 +406,6 @@ The abstract goes here.
 % math in the abstract anyway.
 
 % no keywords
-
-
-
 
 % For peer review papers, you can put extra information on the cover
 % page as needed:
@@ -436,28 +417,146 @@ The abstract goes here.
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-
-
 \section{Introduction}
-% no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.7 and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
+\IEEEPARstart{V}{oltage} references play a critical role in analog and digital circuits.  Fig. \ref{fig:overview} illustrates the relationships between each module found in analog circuits.
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.25]{images/overview.png}
+\caption[Overview]{Overview of modules found in analog circuits.\footnotemark}
+\label{fig:overview}
+\end{figure}
+\footnotetext{Image taken from Analog Integrated Circuit Design 2nd Ed. by Carusone}
+Ideally, they provide constant voltage regardless of changes in temperature or supply voltage.  This is important for subsystems which depend on a fixed voltage where the environment conditions are not constant.  Examples include ADC/DAC, voltage regulators, and measurement and control systems.
+The layout was only done for the resistor-MOSFET voltage divider.
+\subsection{Design Tools, Set Up and Assumptions}
+The following tools, settings and assumptions were used.
+\begin{itemize}
+\item LTspice IV
+\item Electric VLSI Design System
+\item 0.18$\mu$m CMOS technology from the Analog Integrated Circuit Design 2nd Ed. course website%\footnote{\href{http://analogicdesign.com/students/netlists-models/model-files/}{Analog Integrated Circuit Design 2nd Ed. Model Files}} website
+\item Temperature range between -50 to 100 $^\circ$C
+\item Ideal voltage/current source
+\item Ideal operational amplifier
+\end{itemize}
 
-\hfill mds
- 
-\hfill January 11, 2007
+\subsection{Objectives}
+The main objectives for the voltage reference are
+\begin{enumerate}
+\item Minimize temperature coefficient
+\item Minimize $V_{DD}$ dependence
+\end{enumerate}
+These will be achieved through design calculations and using an iterative approach to obtain the goals.
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+\subsection{Design Topologies}
+Four different voltage reference topologies were investigated.
+\subsubsection{Design 1. Resistor-MOSFET Voltage Divider}
+The most basic design.  It should be good up to the first-order model but performance may suffer when higher-order parameters are included.
+\subsubsection{Design 2. MOSFET-Only Voltage Divider}
+Improved design.  It should have a better temperature coefficient since the P-channel MOSFET load adds an additonal degree of freedom.
+\subsubsection{Design 3. Current-Diode Divider}
+Improved design.  It should work extremely well, however the one drawback is the reliance on an ideal current source which is difficult to design.
+\subsubsection{Design 4. CMOS Bandgap Voltage Reference}
+Advanced design.  Based off the Brokaw Bandgap Reference, this design is implemented using CMOS parasitic BJTs and an ideal operational amplifier.
+\subsection{Given parameters}
+The following parameters are used in the calculations.
+\begin{itemize}
+\item $V_{_{DD}} = 1.8\;\mathrm{V}$
+\item $TC_{_R} = 0.002$
+\end{itemize}
 
+\begin{table}[htb]
+\centering
+    \begin{tabular}{|l|l|l|}
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+        \hline
+        Parameter                       & NMOS    & PMOS      \\ \hline
+        $V_{_{to}}$ (V)                   & 0.45    & -0.45      \\ 
+        $K_{_n}$ (A/V$^2$)               & 270     & 70         \\ 
+        ${\lambda}{\cdot}L$ ($\mu$m/V)  & 0.08    & 0.08       \\ 
+%        ~          & ~    & ~    \\
 
+        \hline
+    \end{tabular}
+\caption{Parameters for calculations}
+\label{tab:template}
+\end{table}
+
+\section{Resistor-MOSFET Voltage Divider}
+\subsection{Iteration 1}
+Fig. \ref{resistor_circuit1} shows the first iteration of the resistor-MOSFET circuit.  
+\subsubsection{Calculations}
+The total current through the N-channel MOSFET transistor is
+\begin{equation}
+\label{R_totalcurrent}
+I_{_D} = \frac{V_{_{DD}}-V_{_{REF}}}{R}
+\end{equation}
+
+The transistor drain current is
+\begin{equation}
+\label{R_draincurrent}
+I_{_D} = \frac{1}{2}K_{_n}(V_{_{REF}}-V_{_{TN}})^2
+\end{equation}
+
+Using Eq. \ref{R_totalcurrent} and Eq.\ref{R_draincurrent} and solving for the reference voltage gives
+\begin{equation}
+\label{R_ref}
+V_{_{REF}} = V_{_{TN}} - \sqrt{\frac{2(V_{_{DD}}-V_{_{REF}})}{RK_{_n}}}
+\end{equation}
+
+The sensitivity is
+\begin{equation}
+\label{R_sensitivity}
+S_{_{VDD}}^{^{V{REF}}} = \frac{V_{_{DD}}}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{V_{_{DD}}}} \approx \frac{1}{V_{_{TN}}\sqrt{\frac{2RK_{_n}}{V_{_{DD}}}}+2}
+\end{equation}
+
+The temperature coefficient is
+\begin{multline}
+\label{R_tc}
+TC_{_{REF}} = \frac{1}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{T}} =\\\frac{1}{V_{_{REF}}}\left[V_{_{TN}}TC_{_{VTH}}-\frac{1}{2}\sqrt{\frac{2L}{W}\frac{V_{_{DD}}}{RKP(T)}}{\cdot}\left[\frac{1}{R}{\cdot}\frac{{\partial}R}{{\partial}T}-\frac{1.5}{T}\right]\right]
+\end{multline}
+
+\subsubsection{Simulation}
+\subsubsection{Analysis}
+
+\subsection{Iteration 2}
+Fig. \ref{resistor_circuit2} adds an ideal buffer to the output to shield the circuit from loading effectst and leakage current.  Note: These assumptions were also used in Iteration 1 so there are no changes in the calculations.
+%\subsubsection{Calculations}
+%\subsubsection{Simulation}
+%\subsubsection{Analysis}
+
+\section{MOSFET-Only Voltage Divider}
+\subsection{Iteration 1}
+\subsubsection{Calculations}
+Analyzing the small-circuit model, 
+\subsubsection{Simulation}
+\subsubsection{Analysis}
+
+\subsection{Iteration 2}
+\subsubsection{Calculations}
+\subsubsection{Simulation}
+\subsubsection{Analysis}
+
+\section{Current-Diode Divider}
+\subsection{Iteration 1}
+\subsubsection{Calculations}
+\subsubsection{Simulation}
+\subsubsection{Analysis}
+
+\subsection{Iteration 2}
+\subsubsection{Calculations}
+\subsubsection{Simulation}
+\subsubsection{Analysis}
+
+\section{CMOS Bandgap Voltage Reference}
+\subsection{Iteration 1}
+\subsubsection{Calculations}
+\subsubsection{Simulation}
+\subsubsection{Analysis}
+
+\subsection{Iteration 2}
+\subsubsection{Calculations}
+\subsubsection{Simulation}
+\subsubsection{Analysis}
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -586,9 +685,12 @@ The authors would like to thank...
 % (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{IEEEhowto:analogcarusone}
+Add the Analog Integrated Circuit textbook here
+\bibitem{IEEEhowto:cmosbaker}
+Add the CMOS Design book here
+%H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+%  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
 
 \end{thebibliography}
 
