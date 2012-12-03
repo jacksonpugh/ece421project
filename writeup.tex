@@ -166,7 +166,7 @@
 
 
 
-
+\usepackage{pbox}
 \usepackage{hyperref}
 % *** MATH PACKAGES ***
 %
@@ -347,7 +347,9 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
-
+%\DeclareMathSizes{ds}{ts}{ss}{sss}, where ds is the display size, ts is the text size, etc.
+%\DeclareMathSizes{10}{18}{12}{8} 
+%\everymath{\displaystyle}
 \begin{document}
 %
 % paper title
@@ -418,6 +420,8 @@ The following parameters are used in the calculations.
 \end{itemize}
 
 \begin{table}[htb]
+  \caption{Parameters for calculations}
+  \label{tab:parameters}
   \centering
   \begin{tabular}{|l|l|l|}
     \hline
@@ -428,8 +432,6 @@ The following parameters are used in the calculations.
     %        ~          & ~    & ~    \\
     \hline
   \end{tabular}
-  \caption{Parameters for calculations}
-  \label{tab:template}
 \end{table}
 
 \section{Resistor-MOSFET Voltage Divider}
@@ -449,20 +451,36 @@ Fig. \ref{fig:resistor-mosfet1} shows the schematic for the first iteration.  Th
   \label{fig:resistor-mosfet1-ss}
 \end{figure}
 \subsubsection{Design Equations} 
-\begin{equation}
-  \label{r_ref}
-  V_{_{REF}} = V_{_{TN}} - \sqrt{\frac{2(V_{_{DD}}-V_{_{REF}})}{RK_{_n}}}
-\end{equation}
 
-\begin{equation}
-  \label{r_sensitivity}
-  S_{_{VDD}}^{^{V{REF}}} = \frac{V_{_{DD}}}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{V_{_{DD}}}} \approx \frac{1}{V_{_{TN}}\sqrt{\frac{2RK_{_n}}{V_{_{DD}}}}+2}
-\end{equation}
-
+\begin{table}[ht]
+  \caption{Design equations}
+  \label{tab:designequations}
+  \centering
+  \begin{tabular}{|p{1.35cm}|p{8cm}|}
+    \hline
+    \pbox{1.5cm}{Voltage\\Reference} &
+    \begin{equation}
+      \label{r_ref}
+      V_{_{REF}} = V_{_{TN}} - \sqrt{\frac{2(V_{_{DD}}-V_{_{REF}})}{RK_{_n}}}
+    \end{equation}\\
+    \hline
+    \pbox{1.5cm}{$V_{_{DD}}$\\Sensitivity} &
+      \begin{IEEEeqnarray}{rCl}
+        \label{r_sensitivity}
+        S_{_{VDD}}^{^{V{REF}}} & = & \frac{V_{_{DD}}}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{V_{_{DD}}}}
+        \nonumber\\
+        & \approx & \frac{1}{V_{_{TN}}\sqrt{\frac{2RK_{_n}}{V_{_{DD}}}}+2}
+        \IEEEyesnumber
+      \end{IEEEeqnarray}\\
+    \hline
+    Temperature Coefficient &
     \begin{multline}
       \label{r_tc}
-      TC_{_{REF}} = \frac{1}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{T}} =\\\frac{1}{V_{_{REF}}}\left[V_{_{TN}}TC_{_{VTH}}-\frac{1}{2}\sqrt{\frac{2L}{W}\frac{V_{_{DD}}}{RKP(T)}}{\cdot}\left[\frac{1}{R}{\cdot}\frac{{\partial}R}{{\partial}T}-\frac{1.5}{T}\right]\right]
-    \end{multline}
+      TC_{_{REF}} = \frac{1}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{T}} =\\\frac{1}{V_{_{REF}}}\left[V_{_{TN}}TC_{_{TN}}-\frac{1}{2}\sqrt{\frac{2L}{W}\frac{V_{_{DD}}}{RKP(T)}}{\cdot}\left[\frac{1}{R}{\cdot}\frac{{\partial}R}{{\partial}T}-\frac{1.5}{T}\right]\right]
+    \end{multline}\\
+    \hline
+  \end{tabular}
+\end{table}
 
 \subsection{Iteration 2}
 Fig. \ref{fig:resistor-mosfet2} adds an ideal buffer to the output to shield the circuit from loading effectst and leakage current.  Note: These assumptions are also used in Iteration 1 so there are no changes in the calculations.
@@ -539,11 +557,9 @@ Low frequency small-signal
 \begin{equation}
   r_{_d} = \frac{V_{_T}}{I_{_D}} = \frac{kT}{I_{_D}}
 \end{equation}
-The input impedence is inifite due to the assumption of an ideal current source which buffers the input
 \begin{equation}
   \frac{V_{_T}}{I_{_T}} = \infty = R_{_{in}}
 \end{equation}
-The output impedence is the on-resistance of the N-channel MOSEFT
 \begin{equation}
   \frac{V_{_T}}{I_{_T}} = r_{_d} = R_{_{out}}
 \end{equation}
@@ -555,7 +571,6 @@ The output impedence is the on-resistance of the N-channel MOSEFT
 \begin{equation}
   V_{_{BE0}} = \frac{kT_{_0}ln(I_{_D}/I_s)}{q}
 \end{equation}
-True Temperature
 \begin{multline}
   V_{_{BE}} = V_{_{G0}}(1 - T/T_{_0}) + V_{_{BE0}}T/T_{_0}\\+ \frac{mkT}{q}ln(\frac{T_{_0}}{T}) + \frac{kT}{q}ln(\frac{J_{_c}}{J_{_{c0}}}) 
 \end{multline}
