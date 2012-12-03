@@ -166,7 +166,7 @@
 
 
 \usepackage{float}
-\restylefloat{table}
+%\restylefloat{table}
 \usepackage{pbox}
 \usepackage{hyperref}
 % *** MATH PACKAGES ***
@@ -356,7 +356,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Bandgap Reference Voltage Project}
+\title{Bandgap Voltage Reference Project}
 
 \author{\IEEEauthorblockN{Marc Christiansen}
 \IEEEauthorblockA{Email: mjch@pdx.edu}\\
@@ -421,7 +421,7 @@ The following parameters are used in the calculations.
   \item $TC_{_R} = 0.002$
 \end{itemize}
 \begin{table}[!htbp]
-  \caption{Parameters for calculations}
+  \caption[]{Parameters for calculations}
   \label{tab:parameters}
   \centering
   \begin{tabular}{|l|l|l|}
@@ -435,6 +435,7 @@ The following parameters are used in the calculations.
   \end{tabular}
 \end{table}
 \section{Resistor-MOSFET Voltage Divider}
+Design 1 consists of a resistive load and a N-channel MOSFET driver.  The resistive load has a positive temperature coefficient while the N-channel MOSFET has a negative temperature coefficient.  This relationship allows for close-to-constant output voltage based on proper sizing of the devices.
 \subsection{Iteration 1}
 Fig. \ref{fig:resistor-mosfet1} shows the schematic for the first iteration.  This is a simple resistor-MOSEFT voltage divider without consideration for loading effects.
 \begin{figure}[!htbp]
@@ -451,7 +452,7 @@ Fig. \ref{fig:resistor-mosfet1} shows the schematic for the first iteration.  Th
 \end{figure}
 \subsubsection{Resistor-MOSFET Design Equations} 
 \begin{table}[!htbp]
-  \caption{Resistor-MOSFET Design Equations}
+  \caption[]{Resistor-MOSFET Design Equations}
   \label{tab:resistor-moseft-designequations}
   \centering
   \begin{tabular}{|m{1.5cm}|m{6.5cm}|}
@@ -500,7 +501,7 @@ Same as Iteration 1.
   \label{fig:mosfet-only1-ss}
 \end{figure}
 \begin{table}[!htbp]
-  \caption{MOSFET-Only Design Equations}
+  \caption[]{MOSFET-Only Design Equations}
   \label{tab:mosfet-only-designequations}
   \centering
   \begin{tabular}{|m{1.5cm}|m{6.5cm}|}
@@ -559,7 +560,7 @@ Same as Iteration 1.
 \subsection{Iteration 1}
 \subsubsection{Current-Diode Design Equations}
 \begin{table}[!htbp]
-  \caption{Current-Diode Design Equations}
+  \caption[]{Current-Diode Design Equations}
   \label{tab:cm-diode-designequations}
   \centering
   \begin{tabular}{|m{1.5cm}|m{6.5cm}|}
@@ -579,17 +580,17 @@ Same as Iteration 1.
       R_{_{out}} = \frac{V_{_T}}{I_{_T}} = r_{_d}
     \end{equation}
     \\\hline
-    &
+    \pbox{1.5cm}{{\small Diode Current}} &
     \begin{equation}
       I_{_D} = I_se^{^{V_{_D}/V_{T}}} = I_se^{^{qV_{_D}/kT}}
     \end{equation}
     \\\hline
-    &
+    \pbox{1.5cm}{{\small VBE0}} &
     \begin{equation}
       V_{_{BE0}} = \frac{kT_{_0}ln(I_{_D}/I_s)}{q}
     \end{equation}
     \\\hline
-    &
+    \pbox{1.5cm}{{\small VBE total}} &
     \begin{multline}
       V_{_{BE}} = V_{_{G0}}(1 - T/T_{_0}) + V_{_{BE0}}T/T_{_0}\\+ \frac{mkT}{q}ln(\frac{T_{_0}}{T}) + \frac{kT}{q}ln(\frac{J_{_c}}{J_{_{c0}}}) 
     \end{multline}
