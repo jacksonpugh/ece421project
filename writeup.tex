@@ -1,4 +1,6 @@
-
+% Needs to be done: electric layout
+%                   ltspice simulation
+%                   report
 %% bare_conf.tex
 %% V1.3
 %% 2007/01/11
@@ -352,10 +354,6 @@
 % can use linebreaks \\ within to get better formatting as desired
 \title{Bandgap Reference Voltage Project}
 
-
-% author names and affiliations
-% use a multiple column layout for up to three different
-% affiliations
 \author{\IEEEauthorblockN{Marc Christiansen}
 \IEEEauthorblockA{Email: mjch@pdx.edu}\\
 \and
@@ -366,301 +364,221 @@ Email: japugh@pdx.edu}
 \IEEEauthorblockN{Krish Ramkumar}
 \IEEEauthorblockA{Email: krish13007@gmail.com}}
 
-% conference papers do not typically use \thanks and this command
-% is locked out in conference mode. If really needed, such as for
-% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
-% after \documentclass
-
-% for over three affiliations, or if they all won't fit within the width
-% of the page, use this alternative format:
-% 
-%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
-%Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3}, 
-%Montgomery Scott\IEEEauthorrefmark{3} and
-%Eldon Tyrell\IEEEauthorrefmark{4}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
-%Georgia Institute of Technology,
-%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
-%Email: homer@thesimpsons.com}
-%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
-%Telephone: (800) 555--1212, Fax: (888) 555--1212}
-%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
-
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
-
-% make the title area
 \maketitle
 
 \begin{abstract}
-%\boldmath
 Write this after the paper has been finished.
 \end{abstract}
-% IEEEtran.cls defaults to using nonbold math in the Abstract.
-% This preserves the distinction between vectors and scalars. However,
-% if the conference you are submitting to favors bold math in the abstract,
-% then you can use LaTeX's standard command \boldmath at the very start
-% of the abstract to achieve this. Many IEEE journals/conferences frown on
-% math in the abstract anyway.
-
-% no keywords
-
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
 \IEEEPARstart{V}{oltage} references play a critical role in analog and digital circuits.  Fig. \ref{fig:overview} illustrates the relationships between each module found in analog circuits.
 \begin{figure}[htb]
-\centering
-\includegraphics[scale=0.25]{images/overview.png}
-\caption[Overview]{Overview of modules found in analog circuits.\footnotemark}
-\label{fig:overview}
+  \centering
+  \includegraphics[scale=0.25]{images/overview.png}
+  \caption[Overview]{Overview of modules found in analog circuits.\footnotemark}
+  \label{fig:overview}
 \end{figure}
 \footnotetext{Image taken from Analog Integrated Circuit Design 2nd Ed. by Carusone}
-Ideally, they provide constant voltage regardless of changes in temperature or supply voltage.  This is important for subsystems which depend on a fixed voltage where the environment conditions are not constant.  Examples include ADC/DAC, voltage regulators, and measurement and control systems.
-The layout was only done for the resistor-MOSFET voltage divider.
+\\Ideally, they provide constant voltage regardless of changes in temperature or supply voltage.  This is important for subsystems which depend on a fixed voltage where the environment conditions are not constant.  Examples include ADC/DAC, voltage regulators, and measurement and control systems.
 \subsection{Design Tools, Set Up and Assumptions}
 The following tools, settings and assumptions were used.
 \begin{itemize}
-\item LTspice IV
-\item Electric VLSI Design System
-\item 0.18$\mu$m CMOS technology from the Analog Integrated Circuit Design 2nd Ed. course website%\footnote{\href{http://analogicdesign.com/students/netlists-models/model-files/}{Analog Integrated Circuit Design 2nd Ed. Model Files}} website
-\item Temperature range between -50 to 100 $^\circ$C
-\item Ideal voltage/current source
-\item Ideal operational amplifier
+  \item LTspice IV
+  \item Electric VLSI Design System
+  \item 0.18$\mu$m CMOS technology based off the Analog Integrated Circuit Design 2nd Ed. course website\footnote{\href{http://analogicdesign.com/students/netlists-models/model-files/}{Analog Integrated Circuit Design 2nd Ed. Model Files}} website
+  \item Temperature range between -50 to 100 $^\circ$C
+  \item Ideal voltage/current source
+  \item Ideal operational amplifier
 \end{itemize}
 
 \subsection{Objectives}
-The main objectives for the voltage reference are
+The main objectives for the voltage reference design are
 \begin{enumerate}
-\item Minimize temperature coefficient
-\item Minimize $V_{DD}$ dependence
+  \item Minimize temperature coefficient
+  \item Minimize $V_{DD}$ sensitivity
 \end{enumerate}
-These will be achieved through design calculations and using an iterative approach to obtain the goals.
+These are achieved through design calculations and using an iterative approach.  The layout is done only for the resistor-MOSFET voltage divider.
 
 \subsection{Design Topologies}
-Four different voltage reference topologies were investigated.
+Four different voltage reference topologies are investigated.  %Each design was solved for by hand calculations, modified/iterated for better overall performance, and  simulated and analyzed.
 \subsubsection{Design 1. Resistor-MOSFET Voltage Divider}
-The most basic design.  It should be good up to the first-order model but performance may suffer when higher-order parameters are included.
+The most basic design.  It should be good for first-order effects but performance may suffer when higher-order parameters are included.
 \subsubsection{Design 2. MOSFET-Only Voltage Divider}
 Improved design.  It should have a better temperature coefficient since the P-channel MOSFET load adds an additonal degree of freedom.
-\subsubsection{Design 3. Current-Diode Divider}
+\subsubsection{Design 3. Current-Diode Voltage Divider}
 Improved design.  It should work extremely well, however the one drawback is the reliance on an ideal current source which is difficult to design.
 \subsubsection{Design 4. CMOS Bandgap Voltage Reference}
 Advanced design.  Based off the Brokaw Bandgap Reference, this design is implemented using CMOS parasitic BJTs and an ideal operational amplifier.
 \subsection{Given parameters}
 The following parameters are used in the calculations.
 \begin{itemize}
-\item $V_{_{DD}} = 1.8\;\mathrm{V}$
-\item $TC_{_R} = 0.002$
+  \item $V_{_{DD}} = 1.8\;\mathrm{V}$
+  \item $TC_{_R} = 0.002$
 \end{itemize}
 
 \begin{table}[htb]
-\centering
-    \begin{tabular}{|l|l|l|}
-
-        \hline
-        Parameter                       & NMOS    & PMOS      \\ \hline
-        $V_{_{to}}$ (V)                   & 0.45    & -0.45      \\ 
-        $K_{_n}$ (A/V$^2$)               & 270     & 70         \\ 
-        ${\lambda}{\cdot}L$ ($\mu$m/V)  & 0.08    & 0.08       \\ 
-%        ~          & ~    & ~    \\
-
-        \hline
-    \end{tabular}
-\caption{Parameters for calculations}
-\label{tab:template}
+  \centering
+  \begin{tabular}{|l|l|l|}
+    \hline
+    Parameter                       & NMOS    & PMOS      \\ \hline
+    $V_{_{to}}$ (V)                   & 0.45    & -0.45      \\ 
+    $K_{_n}$ ($\mu$A/V$^2$)               & 270     & 70         \\ 
+    ${\lambda}{\cdot}L$ ($\mu$m/V)  & 0.08    & 0.08       \\ 
+    %        ~          & ~    & ~    \\
+    \hline
+  \end{tabular}
+  \caption{Parameters for calculations}
+  \label{tab:template}
 \end{table}
 
 \section{Resistor-MOSFET Voltage Divider}
 \subsection{Iteration 1}
-Fig. \ref{resistor_circuit1} shows the first iteration of the resistor-MOSFET circuit.  
-\subsubsection{Calculations}
-The total current through the N-channel MOSFET transistor is
+Fig. \ref{fig:resistor-mosfet1} shows the schematic for the first iteration.  This is a simple resistor-MOSEFT voltage divider without consideration for loading effects.
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.25]{images/resistor-mosfet1.png}
+  \caption[resistor1]{Iteration 1 Resistor-MOSFET Circuit}
+  \label{fig:resistor-mosfet1}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.25]{images/resistor-mosfet1-ss.png}
+  \caption[resistor1-ss]{Iteration 1 Resistor-MOSFET Small Signal Circuit}
+  \label{fig:resistor-mosfet1-ss}
+\end{figure}
+\subsubsection{Design Equations} 
 \begin{equation}
-\label{R_totalcurrent}
-I_{_D} = \frac{V_{_{DD}}-V_{_{REF}}}{R}
+  \label{r_ref}
+  V_{_{REF}} = V_{_{TN}} - \sqrt{\frac{2(V_{_{DD}}-V_{_{REF}})}{RK_{_n}}}
 \end{equation}
 
-The transistor drain current is
 \begin{equation}
-\label{R_draincurrent}
-I_{_D} = \frac{1}{2}K_{_n}(V_{_{REF}}-V_{_{TN}})^2
+  \label{r_sensitivity}
+  S_{_{VDD}}^{^{V{REF}}} = \frac{V_{_{DD}}}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{V_{_{DD}}}} \approx \frac{1}{V_{_{TN}}\sqrt{\frac{2RK_{_n}}{V_{_{DD}}}}+2}
 \end{equation}
 
-Using Eq. \ref{R_totalcurrent} and Eq.\ref{R_draincurrent} and solving for the reference voltage gives
-\begin{equation}
-\label{R_ref}
-V_{_{REF}} = V_{_{TN}} - \sqrt{\frac{2(V_{_{DD}}-V_{_{REF}})}{RK_{_n}}}
-\end{equation}
-
-The sensitivity is
-\begin{equation}
-\label{R_sensitivity}
-S_{_{VDD}}^{^{V{REF}}} = \frac{V_{_{DD}}}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{V_{_{DD}}}} \approx \frac{1}{V_{_{TN}}\sqrt{\frac{2RK_{_n}}{V_{_{DD}}}}+2}
-\end{equation}
-
-The temperature coefficient is
-\begin{multline}
-\label{R_tc}
-TC_{_{REF}} = \frac{1}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{T}} =\\\frac{1}{V_{_{REF}}}\left[V_{_{TN}}TC_{_{VTH}}-\frac{1}{2}\sqrt{\frac{2L}{W}\frac{V_{_{DD}}}{RKP(T)}}{\cdot}\left[\frac{1}{R}{\cdot}\frac{{\partial}R}{{\partial}T}-\frac{1.5}{T}\right]\right]
-\end{multline}
-
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+    \begin{multline}
+      \label{r_tc}
+      TC_{_{REF}} = \frac{1}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{T}} =\\\frac{1}{V_{_{REF}}}\left[V_{_{TN}}TC_{_{VTH}}-\frac{1}{2}\sqrt{\frac{2L}{W}\frac{V_{_{DD}}}{RKP(T)}}{\cdot}\left[\frac{1}{R}{\cdot}\frac{{\partial}R}{{\partial}T}-\frac{1.5}{T}\right]\right]
+    \end{multline}
 
 \subsection{Iteration 2}
-Fig. \ref{resistor_circuit2} adds an ideal buffer to the output to shield the circuit from loading effectst and leakage current.  Note: These assumptions were also used in Iteration 1 so there are no changes in the calculations.
-%\subsubsection{Calculations}
-%\subsubsection{Simulation}
-%\subsubsection{Analysis}
+Fig. \ref{fig:resistor-mosfet2} adds an ideal buffer to the output to shield the circuit from loading effectst and leakage current.  Note: These assumptions are also used in Iteration 1 so there are no changes in the calculations.
+\subsubsection{Design Equations}
+Same as Iteration 1.
 
 \section{MOSFET-Only Voltage Divider}
 \subsection{Iteration 1}
-\subsubsection{Calculations}
+\subsubsection{Design Equations}
 Analyzing the small-circuit model, 
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.25]{images/mosfet-only1.png}
+  \caption[mosfet-only1]{Iteration 1 MOSFET-Only Circuit}
+  \label{fig:mosfet-only1}
+\end{figure}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.25]{images/mosfet-only1-ss.png}
+  \caption[mosfet-only1-ss]{Iteration 1 MOSFET-Only Small Signal Circuit}
+  \label{fig:mosfet-only1-ss}
+\end{figure}
+\begin{equation}
+  V_{_{GS1}} = V_{_{GS2}} = V_{_T}
+\end{equation}
+\begin{IEEEeqnarray}{rCl}
+  I_{_T} & = & gm_{_1}V_{_{GS1}} + \frac{V_{_T}}{r_{_{ds1}}} + \frac{V_{_T}}{r_{_{ds2}}} + - gm_{_2}V_{_{GS2}}
+  \IEEEyessubnumber\\
+  & = & \frac{V_{_T}}{r_{_{ds1}}} + \frac{V_{_T}}{r_{_{ds2}}}
+  \nonumber\\
+  & = & V_{_T}\left(\frac{1}{r_{_{ds1}}} + \frac{1}{r_{_{ds2}}}\right)
+  \IEEEyessubnumber
+\end{IEEEeqnarray}
+Rearranging for the resistance gives
+\begin{IEEEeqnarray}{rCl}
+  \frac{V_{_T}}{I_{_T}} & = & \left(\frac{1}{r_{_{ds1}}} + \frac{1}{r_{_{ds2}}}\right)^{-1}
+  \nonumber\\
+  & = & r_{_{ds1}}//r_{_{ds2}}
+  \IEEEyesnumber
+\end{IEEEeqnarray}
+
+\begin{IEEEeqnarray}{rCl}
+  I_{_{DN}} & = & K_{_n}\left(V_{_{REF}}-V_{_{TN}}\right)^2
+  \IEEEyessubnumber\\
+  I_{_{DP}} & = & K_{_p}\left(V_{_{REF}}-V_{_{TP}}\right)^2
+  \IEEEyessubnumber
+\end{IEEEeqnarray}
+
+\begin{equation}
+  V_{_{REF}} = \frac{-V_{_{TP}} + V_{_{DD}} + \sqrt{\frac{K_{_n}}{K_{_p}}}V_{_{TN}}}{\sqrt{\frac{K_{_n}}{K_{_p}}} + 1}
+\end{equation}
+
+\begin{multline}
+  TC(V_{_{REF}}) = \frac{1}{V_{_{REF}}}\frac{{\partial}V_{_{REF}}}{{\partial}T}\\
+  = \frac{1}{V_{_{REF}}}\frac{1}{\sqrt{\frac{K_{_n}}{K_{_p}}}+1}\left(\frac{{\partial}-V_{_{TP}}}{{\partial}T} + \sqrt{\frac{K_{_n}}{K_{_p}}}\frac{{\partial}V_{_{TN}}}{{\partial}T}\right)
+\end{multline}
 
 \subsection{Iteration 2}
-\subsubsection{Calculations}
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+\subsubsection{Design Equations}
 
-\section{Current-Diode Divider}
+\section{Current-Diode Voltage Divider}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[scale=0.25]{images/cm-diode1.png}
+  \caption[cm-diode1]{Iteration 1 Current-Diode Circuit}
+  \label{fig:cm-diode1}
+\end{figure}
 \subsection{Iteration 1}
-\subsubsection{Calculations}
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+\subsubsection{Design Equations}
+
+Low frequency small-signal
+\begin{equation}
+  r_{_d} = \frac{V_{_T}}{I_{_D}} = \frac{kT}{I_{_D}}
+\end{equation}
+The input impedence is inifite due to the assumption of an ideal current source which buffers the input
+\begin{equation}
+  \frac{V_{_T}}{I_{_T}} = \infty = R_{_{in}}
+\end{equation}
+The output impedence is the on-resistance of the N-channel MOSEFT
+\begin{equation}
+  \frac{V_{_T}}{I_{_T}} = r_{_d} = R_{_{out}}
+\end{equation}
+
+\begin{equation}
+  I_{_D} = I_se^{^{V_{_D}/V_{T}}} = I_se^{^{qV_{_D}/kT}}
+\end{equation}
+
+\begin{equation}
+  V_{_{BE0}} = \frac{kT_{_0}ln(I_{_D}/I_s)}{q}
+\end{equation}
+True Temperature
+\begin{multline}
+  V_{_{BE}} = V_{_{G0}}(1 - T/T_{_0}) + V_{_{BE0}}T/T_{_0}\\+ \frac{mkT}{q}ln(\frac{T_{_0}}{T}) + \frac{kT}{q}ln(\frac{J_{_c}}{J_{_{c0}}}) 
+\end{multline}
 
 \subsection{Iteration 2}
-\subsubsection{Calculations}
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+\subsubsection{Design Equations}
 
 \section{CMOS Bandgap Voltage Reference}
 \subsection{Iteration 1}
-\subsubsection{Calculations}
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+\subsubsection{Design Equations}
 
 \subsection{Iteration 2}
-\subsubsection{Calculations}
-\subsubsection{Simulation}
-\subsubsection{Analysis}
+\subsubsection{Design Equations}
 
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation Results}
-%\label{fig_sim}
-%\end{figure}
-
-% Note that IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
-
-
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command, the
-% \label for the overall figure must come after \caption.
-% \hfil must be used as a separator to get equal spacing.
-% The subfigure.sty package works much the same way, except \subfigure is
-% used instead of \subfloat.
-%
-%\begin{figure*}[!t]
-%\centerline{\subfloat[Case I]\includegraphics[width=2.5in]{subfigcase1}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{subfigcase2}%
-%\label{fig_second_case}}}
-%\caption{Simulation results}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-
-
-% An example of a floating table. Note that, for IEEE style tables, the 
-% \caption command should come BEFORE the table. Table text will default to
-% \footnotesize as IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
-
-
-% Note that IEEE does not put floats in the very first column - or typically
-% anywhere on the first page for that matter. Also, in-text middle ("here")
-% positioning is not used. Most IEEE journals/conferences use top floats
-% exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the \fnbelowfloat
-% command of the stfloats package.
-
-
+\section{Simulation and Results/Conclusions}
 
 \section{Conclusion}
 The conclusion goes here.
-
-
-
-
 % conference papers do not normally have an appendix
 
-
 % use section* for acknowledgement
-\section*{Acknowledgment}
-
-
-The authors would like to thank...
-
-
-
-
-
+%\section*{Acknowledgment}
+%The authors would like to thank...
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
 % adjust value as needed - may need to be readjusted if
@@ -684,20 +602,10 @@ The authors would like to thank...
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
+\bibitem{IEEEhowto:cmos_baker}
+R. Jacob Baker, "CMOS: Circuit Design, Layout, and Simulation", 3rd edition, Wiley-IEEE Press, 2010
 
-\bibitem{IEEEhowto:analogcarusone}
-Add the Analog Integrated Circuit textbook here
-\bibitem{IEEEhowto:cmosbaker}
-Add the CMOS Design book here
-%H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-%  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
+\bibitem{IEEEhowto:analog_carusone}
+T. Chan Carusone, D. Johns, and K. Martin, "Analog Integrated Circuit Design," 2nd edition, J. Wiley \& Sons, 2011.
 \end{thebibliography}
-
-
-
-
-% that's all folks
 \end{document}
-
-
