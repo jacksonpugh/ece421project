@@ -471,8 +471,8 @@ Figure \ref{fig:resistor-mosfet1} shows the basic circuit topology.  This is a s
   \label{fig:resistor-mosfet1-ss}
 \end{figure}
 
-\subsection{Resistor-MOSFET Design Equations} 
-Table \ref{tab:resistor-mosfet-designequations} gives the design equations used throughout the design of the Resistor-MOSFET Voltage Divider.
+\subsection{Resistor-MOSFET Design Approach} 
+Table \ref{tab:resistor-mosfet-designequations} gives the design equations used throughout the design of the Resistor-MOSFET Voltage Divider.  The original design goals call for minimizing TC but setting Eq. \ref{r_tc} does not provide a reasonable approach.  Instead, the main goal for the resistor-MOSFET circuit was to obtain a voltage reference of 1.24 V, which is close to the Silicon bandgap voltage.  Another constraint included was to keep the total power at 500 mW.  From here, the current can be calculated.  This allows for the W/L ratio to be solved using the drain current equation.  The result leads to a load resistor of 2 K$\Omega$.
 \begin{table}[!htbp]
   \caption[]{Resistor-MOSFET Design Equations}
   \label{tab:resistor-mosfet-designequations}
@@ -532,7 +532,8 @@ Table \ref{tab:rm-ds-1} gives the device sizes for iteration 1 of the Resistor-M
     \hline
   \end{tabular}
 \end{table}
-
+\subsubsection{Design Discussion}
+Analyzing the simulation results showed the power consumption, voltage reference, $Z_{_{out}}$ matched well with the hand calculations.  The temperature coefficient was high and should be compensated in the next iteration if possible.  This can be done by setting $V_{_{REF}}$ close to 0.47 due to the threshold voltage of the N-channel MOSFET transistor.  When these two are close to equal, the drain current is minimized, thereby reducing power consumption.  In addition, the transistor is still biased and will function properly.
 \subsection{Iteration 2}
 \subsubsection{Device Sizes}
 Table \ref{tab:rm-ds-2} gives the device sizes for iteration 2 of the Resistor-MOSFET circuit topology. 
@@ -550,6 +551,8 @@ Table \ref{tab:rm-ds-2} gives the device sizes for iteration 2 of the Resistor-M
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
+Analyzing the results showed significant improvement on the power consumption, temperature coefficient and sensitivity to $V_{_{DD}}$.  The cause is 
 %%Resistor-MOS END
 \pagebreak
 %%MOS-ONLY Begin
