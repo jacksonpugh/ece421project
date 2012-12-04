@@ -386,7 +386,7 @@ Write this after the paper has been finished.
   \label{fig:overview}
 \end{figure}
 \footnotetext{Image taken from Analog Integrated Circuit Design 2nd Ed. by Carusone}
-\\Ideally, voltage references provide constant voltage regardless of changes in temperature, supply voltage, or load.  This is important for subsystems which depend on a fixed voltage where the environmental conditions are not constant.  Examples include ADC/DAC, voltage regulators, measurement, and control systems.
+\\Ideally, voltage references provide a constant voltage regardless of changes in temperature, supply voltage, or load.  This is important for subsystems which depend on a fixed voltage where the environmental conditions are not constant.  Examples include ADC/DAC, voltage regulators, measurement, and control systems.
 \subsection{Design Tools, Set Up and Assumptions}
 The following tools, settings, and assumptions were used.
 \begin{itemize}
@@ -472,7 +472,7 @@ Figure \ref{fig:resistor-mosfet1} shows the basic circuit topology.  This is a s
 \end{figure}
 
 \subsection{Resistor-MOSFET Design Approach} 
-Table \ref{tab:resistor-mosfet-designequations} gives the design equations used throughout the design of the Resistor-MOSFET Voltage Divider.  The original design goals call for minimizing TC but setting Eq. \ref{r_tc} does not provide a reasonable approach.  Instead, the main goal for the resistor-MOSFET circuit was to obtain a voltage reference of 1.24 V, which is close to the Silicon bandgap voltage.  Another constraint included was to keep the total power at 500 mW.  From here, the current can be calculated.  This allows for the W/L ratio to be solved using the drain current equation.  The result leads to a load resistor of 2 K$\Omega$.
+Table \ref{tab:resistor-mosfet-designequations} gives the design equations used throughout the design of the Resistor-MOSFET Voltage Divider.  The original design goals call for minimizing TC but setting Eq. \ref{r_tc} does not provide a reasonable approach.  Instead, the main goal for the resistor-MOSFET circuit was to keep the total power at or below 500 mW.  Another constraint included was to was to obtain a voltage reference of 1.24 V, which is close to the Silicon bandgap voltage.  From here, the current can be calculated.  This allows for the W/L ratio to be solved using the drain current equation.  The result leads to a load resistor of 2 k$\Omega$.
 \begin{table}[!htbp]
   \caption[]{Resistor-MOSFET Design Equations}
   \label{tab:resistor-mosfet-designequations}
@@ -502,7 +502,7 @@ Table \ref{tab:resistor-mosfet-designequations} gives the design equations used 
     \hline
     \pbox{1.5cm}{{\small Temperature Coefficient}} &
     \begin{multline}
-      \label{r_tc}
+      \label{r-tc}
       \mathsmaller{TC_{_{REF}} = \frac{1}{V_{_{REF}}}\frac{\partial{V_{_{REF}}}}{\partial{T}}}\\\mathsmaller{=\frac{1}{V_{_{REF}}}\bigg[V_{_{TN}}TC_{_{V_{TN}}}-}\\\mathsmaller{\frac{1}{2}\sqrt{\frac{2L}{W}\frac{V_{_{DD}}}{RKP(T)}}{\cdot}\left[\frac{1}{R}{\cdot}\frac{{\partial}R}{{\partial}T}-\frac{1.5}{T}\right]\bigg]}
     \end{multline}\\
     \hline
@@ -533,7 +533,7 @@ Table \ref{tab:rm-ds-1} gives the device sizes for iteration 1 of the Resistor-M
   \end{tabular}
 \end{table}
 \subsubsection{Design Discussion}
-Analyzing the simulation results showed the power consumption, voltage reference, $Z_{_{out}}$ matched well with the hand calculations.  The temperature coefficient was high and should be compensated in the next iteration if possible.  This can be done by setting $V_{_{REF}}$ close to 0.47 due to the threshold voltage of the N-channel MOSFET transistor.  When these two are close to equal, the drain current is minimized, thereby reducing power consumption.  In addition, the transistor is still biased and will function properly.
+Analyzing the simulation results showed the power consumption, voltage reference, $Z_{_{out}}$ matched well with the hand calculations.  The temperature coefficient was high and should be compensated in the next iteration if possible.  This can be done by setting $V_{_{REF}}$ close to $V_{TN}$.  When these two are close to equal, the drain current is minimized, thereby reducing power consumption.  In addition, we can see from Equation \ref{r-tc} that the temperature will be reduced and still positive.
 \subsection{Iteration 2}
 \subsubsection{Device Sizes}
 Table \ref{tab:rm-ds-2} gives the device sizes for iteration 2 of the Resistor-MOSFET circuit topology. 
@@ -552,9 +552,9 @@ Table \ref{tab:rm-ds-2} gives the device sizes for iteration 2 of the Resistor-M
   \end{tabular}
 \end{table}
 \subsubsection{Design Discussion}
-Analyzing the results showed significant improvement on the power consumption, temperature coefficient and sensitivity to $V_{_{DD}}$.  The cause is 
+Analyzing the results showed significant improvement on the power consumption, temperature coefficient and sensitivity to $V_{_{DD}}$.
 %%Resistor-MOS END
-\pagebreak
+
 %%MOS-ONLY Begin
 \section{MOSFET-Only Voltage Divider}
 The MOSFET-Only Voltage Divider topology is shown in Figure \ref{fig:mosfet-only1}.  This topology similar to the Resistor-MOSFET topolgy, but R1 is replaced with a diode connected PMOS transistor as an active load.  Figure \ref{fig:mosfet-only1-ss} shows the small signal circuit equivalent for the MOSFET-Only Voltage Divider.
@@ -580,7 +580,7 @@ Table \ref{tab:mosfet-only-designequations} gives the design equations used thro
   \item Solve for the ratio $\sqrt{\frac{K_n}{K_p}}$.
 \end{enumerate}
 
-Equation \ref{mo-tc1} is developed under the assumption that $\frac{\partial{V_{TP,TN}}}{\partial{T}} >> \frac{\partial{K_{n,p}}}{\partial{T}}$.  Since $TC(V_{TP})=TC(V_{TN})$ and $|{V_{TN}}|=|V_{TP}|$, the ratio $\frac{K_n}{K_p} = 1$.  This also implies that $gm_1=gm_2$; thus, the output impedance is given by (\ref{mo-ro}).
+Equation \ref{mo-tc1} is developed under the design constraints give in \ref{mo-desc} and the assumption that $\frac{\partial{V_{TP,TN}}}{\partial{T}} >> \frac{\partial{K_{n,p}}}{\partial{T}}$.  Since $TC(V_{TP})=TC(V_{TN})$ and $|{V_{TN}}|=|V_{TP}|$, the ratio $\frac{K_n}{K_p} = 1$.  This also implies that $gm_1=gm_2$; thus, the output impedance is given by (\ref{mo-ro}).
 
 \begin{table}[!htbp]
   \caption[]{MOSFET-Only Design Equations}
@@ -590,9 +590,11 @@ Equation \ref{mo-tc1} is developed under the assumption that $\frac{\partial{V_{
     \hline
 \pbox{1.5cm}{{\small Design Contstraints}}
     &
-    \begin{equation}
-      \mathsmaller{V_{_{GS1}} = V_{_{GS2}} = V_{_{ref}}}
-    \end{equation}
+    \begin{multline}
+      \mathsmaller{V_{_{GS1}} = V_{_{GS2}} = V_{_{ref}}}\\
+	\mathsmaller{I_{D1} = I_{D2}}
+	\label{mo-desc}
+    \end{multline}
 	\\\hline
  \pbox{1.5cm}{{\small Output Resistance}}&
     \begin{IEEEeqnarray}{rCl}
@@ -641,8 +643,13 @@ Table \ref{tab:mo-ds-1} gives the device sizes for iteration 1 of the MOSFET-Onl
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
+Analyzing the simulation results showed the power consumption and reference voltage matched well with the hand calculations, but our measured temperature coefficient was far higher than expected.  This is because we simplified the design equations to first order terms and set the temperature coefficient to zero to find our device sizes.  The temperature coefficient is minimized in the second iteration of the design.
 
 \subsection{Iteration 2}
+\subsubsection{Optominimization Approach}
+To optimize this circuit with a second iteration, we decided increase $K_n$ while keeping $K_p$ constant in order to increase the current draw of the NMOS transistor.  This will cause the PMOS transistor to have a greater voltage drop across it and lower the $V_{DS}$ of the NMOS transitor.  This brings $V_{GS}$ closer to $V_{TN}$ and will reduce the temperature coeffcient down in a similar manner as is performed in the optomization of Design 1.
+
 \subsubsection{Device Sizes}
 Table \ref{tab:mo-ds-2} gives the device sizes for iteration 2 of the MOSFET-Only circuit topology design.
 \begin{table}[!htbp]
@@ -652,15 +659,18 @@ Table \ref{tab:mo-ds-2} gives the device sizes for iteration 2 of the MOSFET-Onl
   \begin{tabular}{|l|l|l|}
     \hline
     Parameter			& NMOS	&PMOS \\ \hline
-    $W$ ($\mu$m)		&2		&-\\ 
-    $L$ ($\mu$m)		& 1		&-\\
+    $W$ ($\mu$m)		&32		&8\\ 
+    $L$ ($\mu$m)		& 1		&1\\
     %        ~          & ~    & ~    \\
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
+Analyzing simulation of iteration two of the MOSFET-Only Voltage Divider, we see that we have traded power consumption and size for performance.  We will not optimize this design any further.\\
+\subsubsection{Layout}
+Figure XX displays the layout of iteration two the MOSFET-Only Voltage Divider.  Figure XX displays the simulations of iteration two the MOSFET-Only Voltage Divider.  Notice how Figure XX matches Figure XX.
 %%MOS-ONLY END
 
-\newpage
 %%Current-Diode Begin
 \section{Current-Diode Voltage Reference}
 The Current-Diode Voltage Divider topology is shown in Figure \ref{fig:cm-diode1}.  This consists of an absolute, ideal current source in series with a diode.  This diode is a vertical CMOS diode conected PNP BJT.  The output of the circuit is taken at the node between the current source and the anode of the diode.  Figure \ref{fig:cm-diode1-ss} shows the small signal circuit equivalent for the Current-Diode Voltage Reference.
@@ -743,8 +753,10 @@ Table \ref{tab:cm-diode-designequations} gives the relevant design equations for
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
 
 \subsection{Iteration 2}
+\subsubsection{Optomization Approach}
 	\subsubsection{Device Parameters}
 \begin{table}[!htbp]
   \caption[]{Current Diode Voltage Reference, Iteration 2}
@@ -759,6 +771,7 @@ Table \ref{tab:cm-diode-designequations} gives the relevant design equations for
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
 %%END Current-Diode Voltage Divider
 
 %%Begin Load Buffering
@@ -800,8 +813,10 @@ Figure \ref{fig:bgr-1} shows the generic CMOS Bandgap Voltage Reference.
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
 
 \subsection{Iteration 2}
+\subsubsection{Optomization Approach}
 	\subsubsection{Device Parameters}
 \begin{table}[!htbp]
   \caption[]{Bandgap Reference Device Parameters, Iteration 2}
@@ -815,9 +830,9 @@ Figure \ref{fig:bgr-1} shows the generic CMOS Bandgap Voltage Reference.
     \hline
   \end{tabular}
 \end{table}
+\subsubsection{Design Discussion}
 %%End CMOS Bandgap Voltage Reference
 
-\onecolumn
 %%Begin Sim Results/Comp
 \section{Simulation and Results/Comparisons}
 Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the input impedance of each circuit topology.  Figure \ref{fig:output-z-meas} in the Appendix shows the circuit for testing the output impedance of each circuit topology.  Figure \ref{fig:fr-meas} in the Appendix shows the circuit for testing the frequency response of each circuit topology.\\
@@ -854,18 +869,18 @@ Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the 
     \begin{tabular}{|l|l|l|l|l|}
         \hline
         Parameter                & Hand-calc & Iteration 1 & Iteration 2 & Comments \\ \noalign{\hrule height 1.3pt}
-        \# Passive Elements      & 0                 & 0           & 0           & ~        \\ \hline
-        \# Active Elements       & 2                 & 2           & 2           & ~        \\ \hline
-        $\sum$Width ($\mu$m)       & 10                 & 10           & ~           & ~        \\ \hline
-        $\sum$Area ($\mu$m)$^2$    & 10                 & 10           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $\sum P$ (m$W$)          & 0.1                 & 0.094           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $V_{ref}$ ($V$)		      & 0.904                 & .894           & ~           & ~        \\ \hline
-        TC(Vref) ($ppm$)      & 13.6                 & 120.4           & ~           & ~        \\ \hline
-        $V_{DD}$ Sens.           & 1.0045                 & 0.5           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $Z_{out}$ ($\Omega$)     & 101.25k                 & 2.3k           & ~           & ~        \\ \hline
-        $Z_{in}$ ($\Omega$)      & -165                 & 10.4k           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $V_{out,max}$ ($V$)      & 0.904                  & .903           & ~           & ~        \\ \hline
-        $V_{out,min}$ ($V$)      & 0.904                  & .887           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
+        \# Passive Elements      & 0                 & 0           & 0           & 0        \\ \hline
+        \# Active Elements       & 2                 & 2           & 2           & 2        \\ \hline
+        $\sum$Width ($\mu$m)       & 10                 & 10           & 40           & ~        \\ \hline
+        $\sum$Area ($\mu$m)$^2$    & 10                 & 10           & 40           & ~        \\ \noalign{\hrule height 1.3pt}
+        $\sum P$ (m$W$)          & 0.1                 & 0.094           & 0.225           & ~        \\ \noalign{\hrule height 1.3pt}
+        $V_{ref}$ ($V$)		      & 0.904                 & .894           & 0.596           & ~        \\ \hline
+        TC(Vref) ($ppm$)      & 13.6                 & 120.4           & 3.06           & ~        \\ \hline
+        $V_{DD}$ Sens.           & 1.0045                 & 0.5           & 0.175           & ~        \\ \noalign{\hrule height 1.3pt}
+        $Z_{out}$ ($\Omega$)     & 101.25k                 & 2.3k           & 626           & ~        \\ \hline
+        $Z_{in}$ ($\Omega$)      & -165                 & 10.4k           & 4.33k           & ~        \\ \noalign{\hrule height 1.3pt}
+        $V_{out,max}$ ($V$)      & 0.904                  & .903           & 0.597           & ~        \\ \hline
+        $V_{out,min}$ ($V$)      & 0.904                  & .887           & 0.594           & ~        \\ \noalign{\hrule height 1.3pt}
         Gain ($dBV$)             & ~                 & ~           & ~           & ~        \\ \hline
         $BW$ (Hz)                & ~                 & ~           & ~           & ~        \\ \hline
         GBW ($dBV$Hz) & ~                 & ~           & ~           & ~        \\ \hline
@@ -918,16 +933,16 @@ Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the 
         Parameter                & Hand-calc & Iteration 1 & Iteration 2 & Comments \\ \noalign{\hrule height 1.3pt}
         \# Passive Elements      & 3                 & 3           & 3           & ~        \\ \hline
         \# Active Elements       & 3                 & 3           & 3           & ~        \\ \hline
-        $\sum$Width ($\mu$m)       & -               & -           & -          & -        \\ \hline
-        $\sum$Area ($\mu$m)$^2$    & -                 & -           & -           & -        \\ \noalign{\hrule height 1.3pt}
-        $\sum P$ (m$W$)          & 1                 & 1.26           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $V_{ref}$ ($V$)		      & 1.24                 & 1.33           & ~           & ~        \\ \hline
-        TC(Vref) ($ppm$)      & 0                 & 396           & ~           & ~        \\ \hline
-        $V_{DD}$ Sens.           & 0                 & 0.068           & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $Z_{out}$ ($\Omega$)     & 0                 & 72.7           & ~           & ~        \\ \hline
-        $Z_{in}$ ($\Omega$)      & $\infty$                 &$\infty$            & ~           & ~        \\ \noalign{\hrule height 1.3pt}
-        $V_{out,max}$ ($V$)      & 1.24                 & 1.37           & ~           & ~        \\ \hline
-        $V_{out,min}$ ($V$)      & 1.24                & 1.29            & ~           & ~        \\ \noalign{\hrule height 1.3pt}
+        $\sum$Width ($\mu$m)       & -               & -           & -          & ~        \\ \hline
+        $\sum$Area ($\mu$m)$^2$    & -                 & -           & -           & ~        \\ \noalign{\hrule height 1.3pt}
+        $\sum P$ (m$W$)          & 1                 & 1.26           & 0.985           & ~        \\ \noalign{\hrule height 1.3pt}
+        $V_{ref}$ ($V$)		      & 1.24                 & 1.33           & 1.184           & ~        \\ \hline
+        TC(Vref) ($ppm$)      & 0                 & 396           & 27.2           & ~        \\ \hline
+        $V_{DD}$ Sens.           & 0                 & 0.068           & 0.032           & ~        \\ \noalign{\hrule height 1.3pt}
+        $Z_{out}$ ($\Omega$)     & 0                 & 72.7           & 72.7           & ~        \\ \hline
+        $Z_{in}$ ($\Omega$)      & $\infty$                 &$\infty$            & $\infty$           & ~        \\ \noalign{\hrule height 1.3pt}
+        $V_{out,max}$ ($V$)      & 1.24                 & 1.37           & 1.184           & ~        \\ \hline
+        $V_{out,min}$ ($V$)      & 1.24                & 1.29            & 1.180           & ~        \\ \noalign{\hrule height 1.3pt}
         Gain ($dBV$)             & -                 & ~           & ~           & ~        \\ \hline
         $BW$ (Hz)                & -                & ~           & ~           & ~        \\ \hline
         GBW ($dBV$Hz) 	& -                 & ~           & ~           & ~        \\ \hline
@@ -935,7 +950,6 @@ Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the 
 \end{table}
 %%END Sim Results/Comp
 
-\twocolumn
 %%Begin Conclusion
 \section{Conclusion}
 The conclusion goes here.
