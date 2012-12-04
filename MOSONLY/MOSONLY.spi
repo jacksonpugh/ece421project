@@ -1,0 +1,18 @@
+*** SPICE deck for cell Inverter{lay} from library Inverter
+*** Created on Sun Oct 14, 2012 14:07:05
+*** Last revised on Tue Dec 04, 2012 00:27:32
+*** Written on Tue Dec 04, 2012 00:30:09 by Electric VLSI Design System, 
+*version 9.03
+*** Layout tech: cmos, foundry NONE
+*** UC SPICE *** , MIN_RESIST 10.0, MIN_CAPAC 0.0FF
+
+*** TOP LEVEL CELL: Inverter{lay}
+Mnmos@0 out out gnd gnd NMOS L=1U W=2U
+Mpmos@0 out out vdd vdd PMOS L=1U W=8U
+
+* Spice Code nodes in cell cell 'Inverter{lay}'
+vdd vdd 0 DC 1.8
+.step temp -50 100
+.op
+.include C:\Users\christim\p18\p18_cmos_models_tt.inc
+.END

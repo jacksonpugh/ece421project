@@ -1,0 +1,41 @@
+# header information:
+HInverter|9.03
+
+# Views:
+Vlayout|lay
+
+# Technologies:
+Tcmos|ScaleFORcmos()D1000.0
+
+# Cell Inverter;1{lay}
+CInverter;1{lay}||cmos|1350248825377|1354609861281|
+Ngeneric:Facet-Center|art@0||0|0||||AV
+Nmocmos:Metal-1-P-Active-Con|contact@0||-29|9|5||R|
+Nmocmos:Metal-1-P-Active-Con|contact@1||-17|9|5||R|
+Nmocmos:Metal-1-N-Active-Con|contact@2||-29|-15|||R|
+Nmocmos:Metal-1-N-Active-Con|contact@3||-17|-15|||R|
+Nmocmos:Metal-1-Polysilicon-1-Con|contact@5||-23|-7||||
+Nmocmos:N-Transistor|nmos@0||-23|-15|-1|-1|R||SIM_spice_model(D5G5;)SNMOS
+Nmocmos:Metal-1-Pin|pin@1||-11|-7||||
+Nmocmos:Metal-1-Pin|pin@2||-17|-7||||
+Ngeneric:Invisible-Pin|pin@3||-57|18|||||ART_message(D5G2;)SECE 421 - MOSONLY
+Ngeneric:Invisible-Pin|pin@4||-58|11|||||SIM_spice_card(D5G2;)S[vdd vdd 0 DC 1.8,.step temp -50 100,.op,".include C:\\Users\\christim\\p18\\p18_cmos_models_tt.inc"]
+Nmocmos:P-Transistor|pmos@0||-23|9|5|-1|R||SIM_spice_model(D5G5;)SPMOS
+Nmocmos:Metal-1-P-Well-Con|substr@0||-23|-23|15|||
+Nmocmos:Metal-1-N-Well-Con|well@0||-23|21|15|||
+Amocmos:N-Active|net@0|||S0|contact@3||-17|-15|nmos@0|diff-bottom|-19.75|-15
+Amocmos:N-Active|net@1|||S0|nmos@0|diff-top|-26.25|-15|contact@2||-29|-15
+Amocmos:P-Active|net@2|||S0|contact@1||-17|9|pmos@0|diff-bottom|-19.75|9
+Amocmos:P-Active|net@3|||S0|pmos@0|diff-top|-26.25|9|contact@0||-29|9
+Amocmos:Metal-1|net@11||1|S2700|contact@3||-17|-15|pin@2||-17|-7
+Amocmos:Metal-1|net@12||1|S2700|pin@2||-17|-7|contact@1||-17|9
+Amocmos:Metal-1|net@13||1|S1800|pin@2||-17|-7|pin@1||-11|-7
+Amocmos:Polysilicon-1|net@16|||S2700|nmos@0|poly-right|-23|-12|contact@5||-23|-7
+Amocmos:Polysilicon-1|net@17|||S2700|contact@5||-23|-7|pmos@0|poly-left|-23|3
+Amocmos:Metal-1|net@18||1|S0|pin@2||-17|-7|contact@5||-23|-7
+Amocmos:Metal-1|net@19||1|S900|contact@2||-29|-15|substr@0||-29|-23
+Amocmos:Metal-1|net@20||1|S900|well@0||-29|21|contact@0||-29|9
+Egnd||D5G5;|substr@0||U
+Eout||D5G5;|pin@1||U
+Evdd||D5G5;|well@0||U
+X

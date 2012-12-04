@@ -1,0 +1,58 @@
+Circuit: *** SPICE deck for cell Inverter{lay} from library Inverter
+
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Direct Newton iteration for .op point succeeded.
+Semiconductor Device Operating Points:
+                        --- BSIM3 MOSFETS ---
+Name:      mpmos@0     mnmos@0
+Model:      pmos        nmos
+Id:       -7.85e-05    7.85e-05
+Vgs:      -9.12e-01    8.88e-01
+Vds:      -9.12e-01    8.88e-01
+Vbs:       0.00e+00    0.00e+00
+Vth:      -4.46e-01    4.31e-01
+Vdsat:    -3.53e-01    3.08e-01
+Gm:        2.95e-04    3.13e-04
+Gds:       7.86e-06    2.88e-06
+Gmb        1.03e-04    5.56e-04
+Cbd:       0.00e+00    0.00e+00
+Cbs:       0.00e+00    0.00e+00
+Cgsov:     5.48e-15    1.40e-15
+Cgdov:     5.50e-15    1.39e-15
+Cgbov:     9.60e-19    9.78e-19
+dQgdVgb:   6.42e-14    1.63e-14
+dQgdVdb:  -5.41e-15   -1.34e-15
+dQgdVsb:  -5.73e-14   -2.82e-14
+dQddVgb:  -2.71e-14   -6.84e-15
+dQddVdb:   5.46e-15    1.36e-15
+dQddVsb:   2.87e-14    1.51e-14
+dQbdVgb:  -1.00e-14   -2.65e-15
+dQbdVdb:  -5.88e-18    1.06e-18
+dQbdVsb:  -5.51e-15   -3.37e-15
+
+
+
+Date: Tue Dec 04 00:30:09 2012
+Total elapsed time: 0.240 seconds.
+
+tnom = 27
+temp = 100
+method = trap
+totiter = 5
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 3
+fillins = 0
+solver = Normal
+Matrix Compiler1: 68 bytes object code size
+Matrix Compiler2: 169 bytes object code size
+
