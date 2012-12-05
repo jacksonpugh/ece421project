@@ -165,6 +165,7 @@
 
 \usepackage{float}
 %\restylefloat{table}
+\usepackage{morefloats}
 \usepackage{pbox}
 \usepackage{hyperref}
 % *** MATH PACKAGES ***
@@ -373,7 +374,7 @@ Email: japugh@pdx.edu}
 \maketitle
 
 \begin{abstract}
-Write this after the paper has been finished.
+Voltage references are crucial to biasing analog and digital circuits.  In this paper, four different voltage reference designs were analyzed and iterated for optimization in terms of the temperature coefficient, $V_{_{DD}}$ sensitivity, and the total power consumption.  The approach was to develop equations and calculate each design parameter and then simulate and verify the handwritten calculations to LTspice.  Based on the results, the circuit was either modified for improved performance or stored as the final result.  Overall, the methodology and approach led to the design goals being mostly met.
 \end{abstract}
 \IEEEpeerreviewmaketitle
 
@@ -453,7 +454,7 @@ The following parameters are used in the calculations for each circuit topology.
     \hline
   \end{tabular}
 \end{table}
-\newpage
+
 %%Resistor-MOS Begin
 \section{Resistor-MOSFET Voltage Divider}
 Design 1 consists of a diode connected N-channel MOSFET with a resistive load.  The resistive load has a positive temperature coefficient while the N-channel MOSFET has a negative temperature coefficient.  This relationship allows for close-to-constant output voltage based on proper sizing of the devices.\\\tab
@@ -647,8 +648,8 @@ Table \ref{tab:mo-ds-1} gives the device sizes for iteration 1 of the MOSFET-Onl
 Analyzing the simulation results showed the power consumption and reference voltage matched well with the hand calculations, but our measured temperature coefficient was far higher than expected.  This is because we simplified the design equations to first order terms and set the temperature coefficient to zero to find our device sizes.  The temperature coefficient is minimized in the second iteration of the design.
 
 \subsection{Iteration 2}
-\subsubsection{Optominimization Approach}
-To optimize this circuit with a second iteration, we decided increase $K_n$ while keeping $K_p$ constant in order to increase the current draw of the NMOS transistor.  This will cause the PMOS transistor to have a greater voltage drop across it and lower the $V_{DS}$ of the NMOS transitor.  This brings $V_{GS}$ closer to $V_{TN}$ and will reduce the temperature coeffcient down in a similar manner as is performed in the optomization of Design 1.
+\subsubsection{Optimization Approach}
+To optimize this circuit with a second iteration, we decided increase $K_n$ while keeping $K_p$ constant in order to increase the current draw of the NMOS transistor.  This will cause the PMOS transistor to have a greater voltage drop across it and lower the $V_{DS}$ of the NMOS transitor.  This brings $V_{GS}$ closer to $V_{TN}$ and will reduce the temperature coeffcient down in a similar manner as is performed in the Optimization of Design 1.
 
 \subsubsection{Device Sizes}
 Table \ref{tab:mo-ds-2} gives the device sizes for iteration 2 of the MOSFET-Only circuit topology design.
@@ -668,7 +669,13 @@ Table \ref{tab:mo-ds-2} gives the device sizes for iteration 2 of the MOSFET-Onl
 \subsubsection{Design Discussion}
 Analyzing simulation of iteration two of the MOSFET-Only Voltage Divider, we see that we have traded power consumption and size for performance.  We will not optimize this design any further.\\
 \subsubsection{Layout}
-Figure XX displays the layout of iteration two the MOSFET-Only Voltage Divider.  Figure XX displays the simulations of iteration two the MOSFET-Only Voltage Divider.  Notice how Figure XX matches Figure XX.
+Figure \ref{fig:mosfet-electric-2} displays the layout of iteration two the MOSFET-Only Voltage Divider.  Figure \ref{fig:outputofelectric} displays the simulations of iteration two the MOSFET-Only Voltage Divider.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[scale=0.35]{images/mosfet-electric-2.png}
+  \caption[mosfet-electric-2]{MOSFET-Only Layout}
+  \label{fig:mosfet-electric-2}
+\end{figure}
 %%MOS-ONLY END
 
 %%Current-Diode Begin
@@ -739,7 +746,8 @@ Table \ref{tab:cm-diode-designequations} gives the relevant design equations for
 \end{table}
 
 \subsection{Iteration 1}
-	\subsubsection{Device Parameters}
+\subsubsection{Device Parameters}
+Table \ref{tab:cm-dp-1} shows the design parameters for the first iteration of the Current Diode Voltage Reference.
 \begin{table}[!htbp]
   \caption[]{Current Diode Voltage Reference, Iteration 1}
   \label{tab:cm-dp-1}
@@ -754,10 +762,13 @@ Table \ref{tab:cm-diode-designequations} gives the relevant design equations for
   \end{tabular}
 \end{table}
 \subsubsection{Design Discussion}
+The results of the Current Diode Voltage Reference iteration 1 simulations closely match the handcalculations.  This lack of percent error is mainly due to the fact that we had complete control over $I_S$ and $I_D$.  This $V_{ref}$ of this design has the expected negative temperature coefficient of a diode.  This temperature coefficeint is reduced in the second design iteration. 
 
 \subsection{Iteration 2}
-\subsubsection{Optomization Approach}
+\subsubsection{Optimization Approach}
+To reduce the temperature coefficient of the Current Diode Voltage Reference, we connected a resistor between the anode of the diode and the output node.  We set the temperature coefficient of the resistor to be the opposite of that of the diode at $T_0$.  This way, the temperature coefficeints of the diode and resistor cancel and reduce the temperature coefficent of the reference voltage without increasing power consumpiton.  The size of the resistor was chosen such that $V_{ref} = 1.24$ V.
 	\subsubsection{Device Parameters}
+Table \ref{tab:cm-dp-2} shows the design parameters for the second iteration of the Current Diode Voltage Reference.
 \begin{table}[!htbp]
   \caption[]{Current Diode Voltage Reference, Iteration 2}
   \label{tab:cm-dp-2}
@@ -772,12 +783,13 @@ Table \ref{tab:cm-diode-designequations} gives the relevant design equations for
   \end{tabular}
 \end{table}
 \subsubsection{Design Discussion}
+The simulation results of iteration 2 of the Current Diode Voltage Reference are not idea; however, the temperature coeffcient of the reference voltage is greatly reduced.  The nonzero temperature coefficeint is due to the nonlinear temperature coefficient of the diode.  No further iteration of this circuit is desired.
 %%END Current-Diode Voltage Divider
 
 %%Begin Load Buffering
 \section{Design 1-3 Load Buffering}
 	\label{sec:Buff}
-
+Designs 1-3 were improved until their output parameters would be sufficient for most reference voltage needs.  However, if these designs are to be implimented, they must be buffered from next stage loading effects.  Each circuit's operating integrity is heavily dependent on the operating current of the of the bottom half of a divider.  Additionally, these circuits have too high of output impedances to serve as reliable voltage sources.  In order to actaully impliment these circuits, one would need to connected a buffer between the reference voltage and desired input stage as shown in Figure \ref{loadbuff}.
 \begin{figure}[!htbp]
   	\centering
   	\includegraphics[scale=0.15]{images/loadbuff.png}
@@ -788,19 +800,50 @@ Table \ref{tab:cm-diode-designequations} gives the relevant design equations for
 
 %%Begin CMOS Bandgap Voltage Reference
 \section{CMOS Bandgap Voltage Reference}
-Figure \ref{fig:bgr-1} shows the generic CMOS Bandgap Voltage Reference. 
-
+The CMOS Bandgap Voltage Reference is the most advanced voltage reference topology covered in this paper.  Figure \ref{fig:bgr-1} shows the generic CMOS Bandgap Voltage Reference circuit.
 \begin{figure}[!htbp]
   	\centering
   	\includegraphics[scale=0.25]{images/bgr-1.png}
   	\caption[bgr-1]{CMOS Bandgap Voltage Reference Circuit}
   	\label{fig:bgr-1}
-	\end{figure}
+	\end{figure}\\
+The basic theory of operation behind this bandgap reference is as follows:
+\begin{enumerate}
+	\item The ratio of $I_1$ and $I_2$ is set by the ratio of $R1$ and $R3$.
+	\item This generates a voltage of $-\Delta V_{BE}$ at the $V_-$ node of the opamp.
+	\item The $\Delta V_{BE}$ voltage is scaled by the ratio of $R3$ and $R2$.
+	\item The op amp adds $V_{BE}$ with the scaled version of $\Delta V_{BE}$ to create the output voltage.
+\end{enumerate}
+$\Delta V_{BE}$ has a positive temperature coefficient (PTAT) and $V_{BE}$ negative temparture coefficient (CTAT); thus, their sum has a near zero temperature coefficient.  This circuit provides very low $V_{DD}$ sensitivity as the only connection to $V_{DD}$ is the power supply to the op amp.  However, the circuit shown in \ref{fig:bgr-1} cannot run on a low voltage supply because the summation of $\Delta V_{BE}$ and $V_{BE}$ may be larger than $V_{DD}$ and cause the circuit to fail.  Therefore, we raised the $V_{DD}$ to 3.3 V for the Bandgap Voltage Referene Circuit Design.\\\tab
+\emph{Note: In implimentation, the topology shown in \ref{fig:bgr1} requires a start-up circuit to reach the desired reference voltage steady-state.  However, we did not find it necessary to include the start-up circuit in our simulations.}
 
 \subsection{Design Equations}
+\begin{table}[!htbp]
+  \caption[]{Bandgap Voltage Reference Design Equations}
+  \label{tab:cm-diode-designequations}
+  \centering
+  \begin{tabular}{|m{1.5cm}|m{6.5cm}|}
+    \hline
+	\pbox{1.5cm}{\small $\Delta V_{BE}$}&
+    \begin{equation}
+  {\Delta}V_{_{BE}} = V_{_2} - V_{_1} = \frac{kT}{q}ln\Big(\frac{J_{_2}}{J_{_1}}\Big)
+\end{equation}
+    \\\hline
+\pbox{1.5cm}{\small $V_{ref}$}&
+    \begin{equation}
+  V_{_{REF}} = V_{_{EB1}} + \frac{R_3}{R_2}\frac{kT}{q}ln\Big(\frac{R_{_3}}{R_{_1}}\Big)
+\label{bgr-vref}
+\end{equation}
+    \\\hline
+  \end{tabular}
+\end{table}
+
+\subsection{Design Approach}
+The design approach taken in the first iteration of the sizing the components in the Bandgap Voltage Reference Circuit was to set the total power consumption, ratio of $I_1$ and $I_2$ currents, and desired $V_{ref}$.  This produced the necessesary resistor values to realize this design.
 
 \subsection{Iteration 1}
-	\subsubsection{Device Parameters}
+\subsubsection{Device Parameters}
+Table \ref{tab:bg-dp-1} gives the design parameters for iteration 1 of the Bandgab Voltage Reference Circuit.
 \begin{table}[!htbp]
   \caption[]{Bandgap Reference Device Parameters, Iteration 1}
   \label{tab:bg-dp-1}
@@ -814,10 +857,17 @@ Figure \ref{fig:bgr-1} shows the generic CMOS Bandgap Voltage Reference.
   \end{tabular}
 \end{table}
 \subsubsection{Design Discussion}
+The simulation results for iteration one of the Bandgap Voltage Reference closely match the hand calculations.  However, the temperature coefficient was larger than we had anticipated.  The temperature coeffeicient is reduced in iteration 2.
 
 \subsection{Iteration 2}
-\subsubsection{Optomization Approach}
-	\subsubsection{Device Parameters}
+\subsubsection{Optimization Approach}
+There are multiple paths to reducing the Bandgap Voltage Reference.  We noticed that the PTAT slope was overly prominent in our output voltage reference; thus, we set out to reduce the slope of the PTAT component of the reference voltage.  The most direct way to reduce this slope was to raise R2.  To find the new value of R2, we found our maximum error in our output voltage then set R2 such that
+	\begin{equation}
+		R2 = R2 + \beta R2 max(error_{V_{ref}})
+	\end{equation}
+We then experimentaly determined that $\beta$ = 4 gave the desired reduction in temperature coeffcient.
+\subsubsection{Device Parameters}
+Table \ref{tab:bg-dp-2} gives the design parameter for the second iteration of the Bandgap Voltage Reference Circuit.
 \begin{table}[!htbp]
   \caption[]{Bandgap Reference Device Parameters, Iteration 2}
   \label{tab:bg-dp-2}
@@ -825,17 +875,19 @@ Figure \ref{fig:bgr-1} shows the generic CMOS Bandgap Voltage Reference.
   \begin{tabular}{|l|l|l|l|l|}
     \hline
     Parameter			& PNPDIODE	&R1 &R2	&R3 \\ \hline
-    $R$ ($\Omega$)		&-		&	&	&\\ \hline
+    $R$ ($\Omega$)		&-		&1.69k	&3.02k	&16.9k\\ \hline
     $I_S$ (A)		&1e-18		&-	&-	&-\\
     \hline
   \end{tabular}
 \end{table}
 \subsubsection{Design Discussion}
+The design parameters were met for the CMOS Bandgap Voltage Reference.  No further iteration is desired.
 %%End CMOS Bandgap Voltage Reference
 
 %%Begin Sim Results/Comp
 \section{Simulation and Results/Comparisons}
 Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the input impedance of each circuit topology.  Figure \ref{fig:output-z-meas} in the Appendix shows the circuit for testing the output impedance of each circuit topology.  Figure \ref{fig:fr-meas} in the Appendix shows the circuit for testing the frequency response of each circuit topology.\\
+\emph{Note: The frequency response of each circuit was not tested because we ran out of time and the frequency response measurement was not crucial to operation of the voltage references.}
 
 \begin{table}[h]
   \caption[]{Resistor-MOSFET Voltage Divider Results}
@@ -861,7 +913,7 @@ Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the 
         GBW ($dBV$Hz) & ~                 & ~           & ~           & ~        \\ \hline
     \end{tabular}
 \end{table}
-\newpage
+
 \begin{table}[h]
   \caption[]{MOSFET-Only Voltage Divider Results}
     \label{tab:mo-res}
@@ -911,19 +963,7 @@ Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the 
         GBW ($dBV$Hz) & ~                 & ~           & ~           & ~        \\ \hline
     \end{tabular}
 \end{table}
-\begin{figure}[!htbp]
-  	\centering
-  	\includegraphics[scale=0.35]{images/cm-diode-vref-1.png}
-  	\caption[cm-diode-vref-1]{Current Diode Voltage Reference VS Temperature, Iteration 1}
-  	\label{fig:cm-diode-vref-1}
-	\end{figure}
 
-\begin{figure}[!htbp]
-  	\centering
-  	\includegraphics[scale=0.35]{images/cm-diode-vref-2.png}
-  	\caption[cm-diode-vref-2]{Current Diode Voltage Reference VS Temperature, Iteration 2}
-  	\label{fig:cm-diode-vref-2}
-	\end{figure}
 \begin{table}[h]
   \caption[]{CMOS Bandgap Voltage Reference Results}
   \label{tab:bgr-res}
@@ -952,11 +992,16 @@ Figure \ref{fig:input-z-meas} in the Appendix shows the circuit for testing the 
 
 %%Begin Conclusion
 \section{Conclusion}
-The conclusion goes here.
+The analyses of all four topologies proved to fit the design parameters. The mosfet only topology alone
+showed some variation for the input (Zin) and output (Zin) impedance. They differed quite a bit from the
+hand calculations. The two iterations for each topology gave a concrete picture on the analysis.
 %%END Conclusion
 
+\clearpage
+\onecolumn
 \appendix
 \label{app:A}
+%%Test Circuits
 \begin{figure}[!htbp]
   	\centering
   	\includegraphics[scale=0.15]{images/input-z-meas.png}
@@ -983,6 +1028,119 @@ The conclusion goes here.
   	\includegraphics[scale=0.25]{images/fr-meas.png}
   	\caption[fr-meas]{Frequency Response Measurement Circuit}
   	\label{fig:fr-meas}
+	\end{figure}
+
+% RESISTOR-MOSFET
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-res1-vref.png}
+  	\caption[output-z-meas]{Resistor-MOSFET Output Voltage @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:mos-res1-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-res1-tempco.png}
+  	\caption[output-z-meas]{Resistor-MOSFET Temperature Coefficient @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:mos-res1-tempco}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-res2-vref.png}
+  	\caption[output-z-meas]{Resistor-MOSFET Output Voltage @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:mos-res2-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-res2-tempco.png}
+  	\caption[output-z-meas]{Resistor-MOSFET Temperature Coefficient @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:mos-res2-tempco}
+	\end{figure}
+
+% MOSFET-ONLY
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-only1-vref.png}
+  	\caption[output-z-meas]{MOSFET-Only Output Voltage @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:mos-only1-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-only1-tempco.png}
+  	\caption[output-z-meas]{MOSFET-Only Temperature Coefficient @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:mos-only1-tempco}
+	\end{figure}
+
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-only2-vref.png}
+  	\caption[output-z-meas]{MOSFET-Only Output Voltage @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:mos-only2-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/mos-only2-tempco.png}
+  	\caption[output-z-meas]{MOSFET-Only Temperature Coefficient @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:mos-only2-tempco}
+	\end{figure}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[scale=0.35]{images/appendix/outputofelectric.png}
+  \caption[outputofelectric]{MOSFET-Only Layout Output}
+  \label{fig:outputofelectric}
+\end{figure}
+
+% CURRENT DIODE
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/cd1-vref.png}
+  	\caption[output-z-meas]{Current Diode Output Voltage @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:cd1-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/cd1-tempco.png}
+  	\caption[output-z-meas]{Current Diode Temperature Coefficient @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:cd1-tempco}
+	\end{figure}
+
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/cd2-vref.png}
+  	\caption[output-z-meas]{Current Diode Output Voltage @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:cd2-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/cd2-tempco.png}
+  	\caption[output-z-meas]{Current Diode Temperature Coefficient @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:cd2-tempco}
+	\end{figure}
+
+% BANDGAP VOLTAGE REFERENCE
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/bg1-vref.png}
+  	\caption[output-z-meas]{Bandgap Voltage Reference Output Voltage @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:bg1-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/bg1-tempco.png}
+  	\caption[output-z-meas]{Bandgap Voltage Reference Temperature Coefficient @ 20$^{\circ}$C-Iteration 1}
+  	\label{fig:bg1-tempco}
+	\end{figure}
+
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/bg2-vref.png}
+  	\caption[output-z-meas]{Bandgap Voltage Reference Output Voltage @ 20$^{\circ}$C-Iteration 2}
+  	\label{fig:bg1-vref}
+	\end{figure}
+\begin{figure}[!htbp]
+  	\centering
+  	\includegraphics[scale=0.35]{images/appendix/bg2-tempco.png}
+  	\caption[output-z-meas]{Bandgap Voltage Reference Temperature Coefficient @ 20$^{\circ}$C-Iteraton 2}
+  	\label{fig:bg1-tempco}
 	\end{figure}
 
 
